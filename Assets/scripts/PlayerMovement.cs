@@ -10,14 +10,14 @@ public class PlayerMovement : MonoBehaviour
     public Transform orientation;
 
     float horizontalInput;
-    float verticallInput;
+    float verticalInput;
      
      Vector3 moveDirection;
 
      Rigidbody rb;
 
 
-     private void start()
+     private void Start()
      {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -30,13 +30,33 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+    private void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
      private void MyInput()
 
      {
         horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticallInput = Input.GetAxisRaw("Vertical");
+        verticalInput = Input.GetAxisRaw("Vertical");
 
     }
+    
+
+    private void MovePlayer()
+    {
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+    }
+
+
+
+
+
+
+
 }
 
 
